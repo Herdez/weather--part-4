@@ -51,7 +51,6 @@ class App extends Component {
   }
 
   getDayOfWeek = (dayOfWeek) => {
-    let now = new Date();
     let options = {  
         weekday: 'long',
         year: 'numeric',
@@ -61,7 +60,7 @@ class App extends Component {
         minute: '2-digit'
     };
 
-    return now.toLocaleString('en-us', options); 
+    return dayOfWeek.toLocaleString('en-us', options); 
   }
 
   getHour = (hour) => {
@@ -82,7 +81,7 @@ class App extends Component {
           dailyWeather.forEach(hour => {
             let dayOfWeek = new Date(hour.time * 1000);
             let today = new Date();
-            if (dayOfWeek.getDay() == today.getDay()) {
+            if (dayOfWeek.getDay() === today.getDay()) {
               this.setState({
                 daily: this.getDayOfWeek(dayOfWeek),
                 loading: false,
@@ -134,6 +133,7 @@ class App extends Component {
   render() {
     let cities = this.state.cities;
     let hourly = this.state.week;
+    let date = this.state.daily.split(',');
 
     return (
       <div className='app'>
@@ -164,12 +164,12 @@ class App extends Component {
             }
           </aside>
               <section className='app__view'>
-                  <h3>{ this.state.show } {this.state.country }</h3>
+                  <h3>{this.state.show} {this.state.country}</h3>
                   { this.state.show &&    
                       <table className="tr-table tr-table-zebra">
                           <thead>
                           <tr>
-                              <th>{this.state.daily.slice(11, 23)}</th>
+                              <th>{date[0]} - {date[1]}, {date[2]}</th>
                           </tr>
                           </thead>
                           <tbody>
